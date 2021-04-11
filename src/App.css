@@ -1,0 +1,35 @@
+/* Header */
+.header h2 {
+  float: right;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 2;
+  color: var(--color-grey);
+  padding-top: 16px;
+  cursor: pointer;
+}
+
+.header h2:hover {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-inverse .navbar-nav>.hidden-sm:hover
+{
+  border-bottom: 5px solid green;
+}
+
+.navbar-inverse .btn-search-submit:before {
+  font-family: robglobicons;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  font-size: 12px;
+  text-decoration: none;
+  text-transform: none;
+  text-align: center;
+  line-height: 1;
+  color: #00a2bd;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\E02E";
+}

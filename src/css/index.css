@@ -1,7 +1,7 @@
-/**  Basic Page CSS **/
+/* *  Basic Page CSS *
 body {
   font-weight: 200;
-  background-color: #337ab7;
+  background-color: #c8deec;
 }
 
 header a,
@@ -17,4 +17,4 @@ footer {
 .btn-primary {
   background-color: #377bb5 !important;
   border: inherit;
-}
+} */
