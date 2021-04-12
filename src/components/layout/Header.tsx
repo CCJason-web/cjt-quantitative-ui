@@ -1,6 +1,7 @@
-import { Nav, Navbar, Button, InputGroup } from 'react-bootstrap';
-import React, { useState } from 'react';
+import { Nav, Navbar, Button, InputGroup, Dropdown, FormControl } from 'react-bootstrap';
+import React, { FormEventHandler, useState, useRef } from 'react';
 import axios from 'axios';
+import SearchbarDropdown from '../../util/SearchBar';
 
 type product = {
   productId: number,
@@ -10,6 +11,7 @@ type product = {
 /**
  * React component for the Header Section.
  */
+
 export const Header = () => {
 
   const [productData, setProductData] = useState<product[]>([]);
@@ -22,10 +24,25 @@ export const Header = () => {
       console.log(e));
   }
 
-  const onInputChange = (event: React.ChangeEvent) => {
-    console.log(event.target.nodeValue);
+  // function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
+  //     response => setProductData(response.data)
+  //   ).catch(e =>
+  //     console.log(e));
+  // }
+  const defaultOptions: any = [];
+
+  for (let i = 0; i < 10; i++) {
+    defaultOptions.push(`option ${i}`);
+    defaultOptions.push(`suggesstion ${i}`);
+    defaultOptions.push(`advice ${i}`);
   }
 
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions(
+      defaultOptions.filter((option: string) => option.includes(event.target.value))
+    );
+  };
 
   return (
     <header className="navbar-inverse header">
@@ -41,22 +58,10 @@ export const Header = () => {
         </Nav>
         <div className=" form-inline">
           <InputGroup>
-            <div className="search-bar-dropdwon">
-              <input type="text" placeholder="Search..." className="form-control" onChange={e => onInputChange(e)}/>
-              <ul className="list-group">
-                {productData?.map(product =>
-                  <button type="button" className="">
-                    {product.productName}
-                  </button>
-                )}
-              </ul>
-            </div>
-            <InputGroup.Prepend>
-              <Button type="get" onClick={getAllProduct} variant="outline-secondary" className="btn-search-submit" title="Search..." />
-            </InputGroup.Prepend>
+            <SearchbarDropdown className=" hidden-sm" options={options} onInputChange={onInputChange}></SearchbarDropdown>
           </InputGroup>
         </div>
       </Navbar>
-    </header>
+    </header >
   )
 }
