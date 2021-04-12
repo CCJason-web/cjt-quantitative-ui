@@ -1,6 +1,7 @@
 import { Nav, Navbar, Button, InputGroup, Dropdown, FormControl } from 'react-bootstrap';
-import React, { FormEventHandler, useState } from 'react';
+import React, { FormEventHandler, useState, useRef } from 'react';
 import axios from 'axios';
+import SearchbarDropdown from '../../util/SearchBar';
 
 type product = {
   productId: number,
@@ -11,11 +12,10 @@ type product = {
  * React component for the Header Section.
  */
 
-
 export const Header = () => {
 
   const [productData, setProductData] = useState<product[]>([]);
-
+  const [options, setOptions] = useState([]);
 
   const getAllProduct = async () => {
     await axios.get("/quantity-search/search/products").then(
@@ -24,13 +24,26 @@ export const Header = () => {
       console.log(e));
   }
 
-  function onInputChange (event: React.ChangeEvent<HTMLInputElement>){
-    axios.get("/quantity-search/search/productsName?productName="+event.target.value).then(
-      response => setProductData(response.data)
-    ).catch(e =>
-      console.log(e));
+  // function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
+  //     response => setProductData(response.data)
+  //   ).catch(e =>
+  //     console.log(e));
+  // }
+  const defaultOptions: any = [];
+
+  for (let i = 0; i < 10; i++) {
+    defaultOptions.push(`option ${i}`);
+    defaultOptions.push(`suggesstion ${i}`);
+    defaultOptions.push(`advice ${i}`);
   }
-  
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions(
+      defaultOptions.filter((option: string) => option.includes(event.target.value))
+    );
+  };
+
   return (
     <header className="navbar-inverse header">
       <Navbar bg="light" variant="light" sticky="top">
@@ -45,20 +58,7 @@ export const Header = () => {
         </Nav>
         <div className=" form-inline">
           <InputGroup>
-            <Dropdown>
-              <Dropdown.Toggle variant="none" >
-              <input type="text" placeholder="Search..." className="form-control" onChange={e => onInputChange(e)}/>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-              {productData?.map(product =>
-                   <Dropdown.Item>{product.productName}</Dropdown.Item>
-                )}
-              </Dropdown.Menu>
-            </Dropdown>
-
-            <InputGroup.Prepend>
-              <Button type="get" onClick={getAllProduct} variant="outline-secondary" className="btn-search-submit" title="Search..." />
-            </InputGroup.Prepend>
+            <SearchbarDropdown className=" hidden-sm" options={options} onInputChange={onInputChange}></SearchbarDropdown>
           </InputGroup>
         </div>
       </Navbar>
