@@ -25,6 +25,7 @@ function SearchbarDropdown (props){
                 ref={inputRef}
                 onChange={onInputChange}
             />
+            
             <ul id="results" className="dropdown-menu list-group popout" ref={ulRef}>
                 {options.map((option, index) => {
                     return (

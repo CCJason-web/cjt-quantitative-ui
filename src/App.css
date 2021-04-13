@@ -13,12 +13,12 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.navbar-inverse .navbar-nav>.hidden-sm:hover
+.header .navbar-nav>.hidden-sm:hover
 {
   border-bottom: 5px solid green;
 }
 
-.navbar-inverse .btn-search-submit:before {
+.header .btn-search-submit:before {
   font-family: robglobicons;
   font-style: normal;
   font-variant: normal;
