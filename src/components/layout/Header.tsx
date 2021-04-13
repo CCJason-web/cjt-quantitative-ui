@@ -1,10 +1,11 @@
 import { Nav, Navbar, Button, InputGroup, Dropdown, FormControl } from 'react-bootstrap';
 import React, { FormEventHandler, useState, useRef } from 'react';
+import '../../css/header.css';
 import axios from 'axios';
 import SearchbarDropdown from '../../util/SearchBar';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Login from "../login";
-import SignUp from "../signup";
+import Login from "../Login";
+import SignUp from "../SignUp";
 
 type product = {
   productId: number,
@@ -40,7 +41,7 @@ export const Header = () => {
   return (
     <Router>
       <header className="header">
-        <Navbar bg="light" variant="light" fixed="top">
+        <Navbar bg="light" variant="light" sticky="top">
           <Navbar.Brand ></Navbar.Brand>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="mr-auto navbar-nav navbar-right">
@@ -54,8 +55,14 @@ export const Header = () => {
             <InputGroup>
               <SearchbarDropdown className=" " options={productData.map(product => product.productName)} onInputChange={onInputChange}></SearchbarDropdown>
             </InputGroup>
+              <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
+              <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
           </div>
-          <div className="outer">
+
+          
+        </Navbar>
+      </header >
+      <div className="outer">
             <div className="inner">
               <Switch>
                 <Route exact path='/' component={Login} />
@@ -64,8 +71,9 @@ export const Header = () => {
               </Switch>
             </div>
           </div>
-        </Navbar>
-      </header >
     </Router>
+
+
+
   )
 }
