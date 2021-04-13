@@ -1,5 +1,5 @@
-import { Nav, Navbar, Button, InputGroup, Dropdown, FormControl } from 'react-bootstrap';
-import React, { FormEventHandler, useState, useRef } from 'react';
+import { Nav, Navbar, InputGroup } from 'react-bootstrap';
+import React, { useState } from 'react';
 import '../../css/header.css';
 import axios from 'axios';
 import SearchbarDropdown from '../../util/SearchBar';
@@ -19,17 +19,6 @@ type product = {
 export const Header = () => {
 
   const [productData, setProductData] = useState<product[]>([]);
-  // const [options, setOptions] = useState([]);
-
-  const getAllProduct = async () => {
-    await axios.get("/quantity-search/search/products").then(
-      response => setProductData(response.data)
-    ).catch(e =>
-      console.log(e));
-  }
-
-  const defaultOptions: any = [];
-
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
@@ -58,8 +47,6 @@ export const Header = () => {
               <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
               <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
           </div>
-
-          
         </Navbar>
       </header >
       <div className="outer">

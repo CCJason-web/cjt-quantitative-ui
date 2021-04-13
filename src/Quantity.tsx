@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Header } from './components/layout/Header';
 import { Carousel } from 'react-bootstrap';
 import image from './static/Quantity-or-quality-twitter.jpeg';

@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 import { QuantityProvider } from './context/QuantityContext';
 import { Quantity } from './Quantity';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 
 /**
