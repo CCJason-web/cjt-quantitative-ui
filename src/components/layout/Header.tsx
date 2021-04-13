@@ -15,7 +15,7 @@ type product = {
 export const Header = () => {
 
   const [productData, setProductData] = useState<product[]>([]);
-  const [options, setOptions] = useState([]);
+  // const [options, setOptions] = useState([]);
 
   const getAllProduct = async () => {
     await axios.get("/quantity-search/search/products").then(
@@ -24,24 +24,24 @@ export const Header = () => {
       console.log(e));
   }
 
-  // function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-  //   axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
-  //     response => setProductData(response.data)
-  //   ).catch(e =>
-  //     console.log(e));
-  // }
   const defaultOptions: any = [];
 
-  for (let i = 0; i < 10; i++) {
-    defaultOptions.push(`option ${i}`);
-    defaultOptions.push(`suggesstion ${i}`);
-    defaultOptions.push(`advice ${i}`);
-  }
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOptions(
-      defaultOptions.filter((option: string) => option.includes(event.target.value))
-    );
+    axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
+      response => setProductData(response.data)
+    ).catch(e =>
+      console.log(e));
+
+      for (let i = 0; i < 10; i++) {
+        defaultOptions.push(`option ${i}`);
+        defaultOptions.push(`suggesstion ${i}`);
+        defaultOptions.push(`advice ${i}`);
+      }
+    // setOptions(
+      
+    //   defaultOptions.filter((option: string) => option.includes(event.target.value))
+    // );
   };
 
   return (
@@ -58,7 +58,7 @@ export const Header = () => {
         </Nav>
         <div className=" form-inline">
           <InputGroup>
-            <SearchbarDropdown className=" hidden-sm" options={options} onInputChange={onInputChange}></SearchbarDropdown>
+            <SearchbarDropdown className=" " options={productData.map(product => product.productName)} onInputChange={onInputChange}></SearchbarDropdown>
           </InputGroup>
         </div>
       </Navbar>
