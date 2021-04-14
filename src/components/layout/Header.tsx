@@ -2,7 +2,7 @@ import { Nav, Navbar, InputGroup } from 'react-bootstrap';
 import React, { useState } from 'react';
 import '../../css/header.css';
 import axios from 'axios';
-import SearchbarDropdown from '../../util/SearchBar';
+import SearchbarDropdown from '../SearchBar';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "../Login";
 import SignUp from "../SignUp";
