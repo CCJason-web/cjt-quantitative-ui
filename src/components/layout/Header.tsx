@@ -19,7 +19,7 @@ type product = {
 export const Header = () => {
 
   const [productData, setProductData] = useState<product[]>([]);
-  const [showResults, setShowResults] = React.useState(false)
+  const [showForm, setShowForm] = React.useState(false)
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
@@ -45,13 +45,13 @@ export const Header = () => {
             <InputGroup>
               <SearchbarDropdown className=" " options={productData.map(product => product.productName)} onInputChange={onInputChange}></SearchbarDropdown>
             </InputGroup>
-            <Link className="nav-link" to={"/sign-in"} onClick={()=>setShowResults(true)} >Sign in</Link>
-            <Link className="nav-link" to={"/sign-up"} onClick={()=>setShowResults(true)} >Sign up</Link>
+            <Link className="nav-link" to={"/sign-in"} onClick={()=>setShowForm(true)} >Sign in</Link>
+            <Link className="nav-link" to={"/sign-up"} onClick={()=>setShowForm(true)} >Sign up</Link>
           </div>
         </Navbar>
       </header >
 
-      { showResults ?
+      { showForm ?
       <div className="outer">
         <div className="inner">
           <Switch>
