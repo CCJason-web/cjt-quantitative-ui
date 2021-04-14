@@ -19,6 +19,7 @@ type product = {
 export const Header = () => {
 
   const [productData, setProductData] = useState<product[]>([]);
+  const [showResults, setShowResults] = React.useState(false)
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
@@ -44,20 +45,23 @@ export const Header = () => {
             <InputGroup>
               <SearchbarDropdown className=" " options={productData.map(product => product.productName)} onInputChange={onInputChange}></SearchbarDropdown>
             </InputGroup>
-              <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
-              <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+            <Link className="nav-link" to={"/sign-in"} onClick={()=>setShowResults(true)} >Sign in</Link>
+            <Link className="nav-link" to={"/sign-up"} onClick={()=>setShowResults(true)} >Sign up</Link>
           </div>
         </Navbar>
       </header >
+
+      { showResults ?
       <div className="outer">
-            <div className="inner">
-              <Switch>
-                <Route exact path='/' component={Login} />
-                <Route path="/sign-in" component={Login} />
-                <Route path="/sign-up" component={SignUp} />
-              </Switch>
-            </div>
-          </div>
+        <div className="inner">
+          <Switch>
+            <Route exact path='/' component={Login} />
+            <Route path="/sign-in" component={Login} />
+            <Route path="/sign-up" component={SignUp} />
+          </Switch>
+        </div>
+      </div> 
+      :null}
     </Router>
 
 

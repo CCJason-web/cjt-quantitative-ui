@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
 export default class Login extends Component {
+    
+    onClickButton(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.preventDefault();
+    }
+
     render() {
         return (
             <form>
@@ -23,7 +28,7 @@ export default class Login extends Component {
                         <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
+                <button type="submit" onClick={e => this.onClickButton(e)}  className="btn btn-dark btn-lg btn-block">Sign in</button>
                 <p className="forgot-password text-right">
                     Forgot <a href="http://localhost">password?</a>
                 </p>
