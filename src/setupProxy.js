@@ -7,4 +7,11 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+
+  app.use('/quantity-authentication',
+  createProxyMiddleware({
+    target: 'http://localhost:8082',
+    changeOrigin: true,
+  })
+);
 };
