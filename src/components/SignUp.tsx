@@ -58,7 +58,6 @@ function SignUp() {
         var data = {
             ...validationData
         }
-        console.log(data);
         
         switch (id) {
             case "firstName":
