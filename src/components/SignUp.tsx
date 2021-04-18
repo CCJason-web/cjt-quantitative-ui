@@ -17,7 +17,7 @@ function SignUp() {
         firstNameIsValid: false,
         lastNameIsValid: false
     });
-
+  
     type Validation = {
         firstName: string,
         lastName: string,
@@ -53,26 +53,31 @@ function SignUp() {
     function singleValueValidation(event: any) {
         let emailValid;
         var id = event.target.getAttribute("id");
-        let data: Validation;
         var pattern = new RegExp(".+@.+\.[A-Za-z]+$");
-        data = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            formErrors: { email: "", firstName: "", lastName: "" },
-            emailIsValid: false,
-            firstNameIsValid: false,
-            lastNameIsValid: false
+        var inputValue = event.target.value;
+        var data = {
+            ...validationData
         }
+        console.log(data);
+        
         switch (id) {
             case "firstName":
+                if(inputValue.toString().length>0) {
+                    data.formErrors.firstName = "";
+                }else{
+                    data.formErrors.firstName = "first name could not be empty";
+                }
                 break;
             case "lastName":
+                if(inputValue.toString().length>0) {
+                    data.formErrors.lastName = "";
+                }else{
+                    data.formErrors.lastName = "last name could not be empty";
+                }
                 break;
             case "email":
-                emailValid = pattern.test(event.target.value || "");
-                data.formErrors.email = emailValid ? "" : " is invalid";
-                console.log(data.formErrors.email)
+                emailValid = pattern.test(inputValue || "");
+                data.formErrors.email = emailValid ? "" : " email is invalid";
                 break;
             default:
                 break;
@@ -109,9 +114,12 @@ function SignUp() {
                     onChange={(e) => singleValueValidation(e)}
                     type="text"
                     placeholder="First name"
+                    className={validationData.formErrors.firstName.length > 0 ? "is-invalid" : ""}
                     ref={firstNameEl}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                {validationData.formErrors.firstName.length > 0 && (
+                    <span className="text-danger">{validationData.formErrors.firstName}</span>
+                )}
             </Form.Group>
             <Form.Group >
                 <Form.Label>Last name</Form.Label>
@@ -123,13 +131,15 @@ function SignUp() {
                     placeholder="Last name"
                     ref={lastNameEl}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                 {validationData.formErrors.lastName.length > 0 && (
+                    <span className="text-danger">{validationData.formErrors.lastName}</span>
+                )}
             </Form.Group>
 
-            <Form.Group >
+            <Form.Group className="has-warning">
                 <Form.Label>Email</Form.Label>
                 <div className="form-inline">
-                    <input type="email" onBlur={(e) => singleValueValidation(e)} id="email" className="form-control" placeholder="Enter email" ref={emailEl} required />
+                    <input type="email" onBlur={(e) => singleValueValidation(e)} id="email" className={"form-control " + (validationData.formErrors.email.length > 0 ? "is-invalid" : "")} placeholder="Enter email" ref={emailEl} required />
                     <button className="btn btn-dark" onClick={e => checkEmail(e)}>Check Email</button>
                 </div>
                 {validationData.formErrors.email.length > 0 && (
