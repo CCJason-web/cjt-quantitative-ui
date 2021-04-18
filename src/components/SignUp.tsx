@@ -1,23 +1,29 @@
 import { useState, useRef } from 'react';
 import Axios from 'axios';
-import { useForm } from "react-hook-form";
-
 
 function SignUp() {
     const [data, setData] = useState<Users>();
-    const inputEl = useRef(null);
+
+    const firstNameEl = useRef<HTMLInputElement | null>(null);
+    const lastNameEl = useRef<HTMLInputElement | null>(null);
+    const emailEl =useRef<HTMLInputElement | null>(null);
+
     type Users = {
         firstName: string,
         lastName: string,
         email: string
     }
 
-    const {register, handleSubmit} = useForm<useRef>();
-
-    function submit(event: React.FormEvent<HTMLFormElement>) {
+    function submit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.preventDefault();
+        const data = {
+            firstName: firstNameEl.current?.value,
+            lastName: lastNameEl.current?.value,
+            email: emailEl.current?.value
+        }
+        console.log(data)
         Axios.post("/quantity-authentication/user/register", {
-    
+            ...data
         });
     }
 
@@ -39,17 +45,17 @@ function SignUp() {
 
             <div className="form-group">
                 <label>First name</label>
-                <input type="text" onChange={(e) => validation(e)} id="firstName" className="form-control" placeholder="First name" ref={inputEl} />
+                <input type="text" onChange={(e) => validation(e)} id="firstName" className="form-control" placeholder="First name" ref={firstNameEl} />
             </div>
 
             <div className="form-group">
                 <label>Last name</label>
-                <input type="text" onChange={(e) => validation(e)} id="lastName" className="form-control" placeholder="Last name" />
+                <input type="text" onChange={(e) => validation(e)} id="lastName" className="form-control" placeholder="Last name" ref={lastNameEl}/>
             </div>
 
             <div className="form-group">
                 <label>Email</label>
-                <input type="email" onChange={(e) => validation(e)} id="email" className="form-control" placeholder="Enter email" />
+                <input type="email" onChange={(e) => validation(e)} id="email" className="form-control" placeholder="Enter email" ref={emailEl}/>
             </div>
 
             <div className="form-group">
@@ -57,7 +63,7 @@ function SignUp() {
                 <input type="password" className="form-control" placeholder="Enter password" />
             </div>
 
-            <button type="submit"  className="btn btn-dark btn-lg btn-block">Register</button>
+            <button type="submit" onClick={(e) => submit(e)} className="btn btn-dark btn-lg btn-block">Register</button>
             <p className="forgot-password text-right">
                 Already registered <a href="http://localhost">log in?</a>
             </p>

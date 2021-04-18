@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use('/quantity-search',
     createProxyMiddleware({
       target: 'http://localhost:8081',
@@ -9,9 +9,9 @@ module.exports = function(app) {
   );
 
   app.use('/quantity-authentication',
-  createProxyMiddleware({
-    target: 'http://localhost:8082',
-    changeOrigin: true,
-  })
-);
+    createProxyMiddleware({
+      target: 'http://localhost:8082',
+      changeOrigin: true,
+    })
+  );
 };
