@@ -29,8 +29,7 @@ export const Header = () => {
   };
 
   return (
-    <Router>
-      <header className="header">
+    <Router>   
         <Navbar bg="light" variant="light" sticky="top">
           <Navbar.Brand ></Navbar.Brand>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
@@ -49,7 +48,6 @@ export const Header = () => {
             <Link className="nav-link" to={"/sign-up"} onClick={()=>setShowForm(true)} >Sign up</Link>
           </div>
         </Navbar>
-      </header >
 
       { showForm ?
       <div className="outer">
