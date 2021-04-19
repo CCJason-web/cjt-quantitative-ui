@@ -8,24 +8,25 @@ function SignUp() {
     const firstNameEl = useRef<HTMLInputElement | null>(null);
     const lastNameEl = useRef<HTMLInputElement | null>(null);
     const emailEl = useRef<HTMLInputElement | null>(null);
-    const [validationData, setValidationData] = useState<Validation>({
-        firstName: "",
-        lastName: "",
-        email: "",
-        formErrors: { email: "", firstName: "", lastName: "" },
-        emailIsValid: false,
+    const [formValid, setFormValid] = useState<FormValidType>({
+       
         firstNameIsValid: false,
-        lastNameIsValid: false
+        lastNameIsValid: false,
+        emailIsValid: false
     });
-  
-    type Validation = {
-        firstName: string,
-        lastName: string,
-        email: string,
-        formErrors: { email: string, firstName: string, lastName: string },
-        emailIsValid: boolean,
+    const [formErrors, setformErrors] = useState<FormErrorType>(
+        { emailError: "", firstNameError: "", lastNameError: "" }
+    );
+
+    type FormValidType = {
+        
         firstNameIsValid: boolean,
-        lastNameIsValid: boolean
+        lastNameIsValid: boolean,
+        emailIsValid: boolean,
+    }
+
+    type FormErrorType = {
+        emailError: string, firstNameError: string, lastNameError: string
     }
 
     function submit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -52,37 +53,40 @@ function SignUp() {
 
     function singleValueValidation(event: any) {
         let emailValid;
+        let firstNamelValid;
+        let lastNameValid;
         var id = event.target.getAttribute("id");
         var pattern = new RegExp(".+@.+\.[A-Za-z]+$");
         var inputValue = event.target.value;
-        var data = {
-            ...validationData
+        var dataErrors = {
+            ...formErrors
         }
-        
+        var dataValid = {
+            ...formValid
+        }
         switch (id) {
             case "firstName":
-                if(inputValue.toString().length>0) {
-                    data.formErrors.firstName = "";
-                }else{
-                    data.formErrors.firstName = "first name could not be empty";
-                }
+                firstNamelValid = inputValue.toString().length > 0;
+                dataErrors.firstNameError = firstNamelValid ? "" : "first name could not be empty";
+                dataValid.firstNameIsValid = firstNamelValid;
                 break;
             case "lastName":
-                if(inputValue.toString().length>0) {
-                    data.formErrors.lastName = "";
-                }else{
-                    data.formErrors.lastName = "last name could not be empty";
-                }
+                lastNameValid = inputValue.toString().length > 0;
+                dataErrors.lastNameError = lastNameValid ? "" : "last name could not be empty";
+                dataValid.lastNameIsValid = lastNameValid;
                 break;
             case "email":
                 emailValid = pattern.test(inputValue || "");
-                data.formErrors.email = emailValid ? "" : " email is invalid";
+                dataErrors.emailError = emailValid ? "" : " email is invalid";
+                dataValid.emailIsValid = emailValid;
                 break;
             default:
                 break;
         }
-        setValidationData(data);
-        setFormIsValid(validateForm);
+
+        setformErrors(dataErrors);
+        setFormValid(dataValid);
+        setFormIsValid(validateForm(dataValid.firstNameIsValid, dataValid.lastNameIsValid, dataValid.emailIsValid));
     }
 
     const handleSubmit = (event: any) => {
@@ -91,15 +95,15 @@ function SignUp() {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            setFormIsValid(true);
             event.preventDefault();
         }
 
 
     };
 
-    function validateForm() {
-        return validationData.emailIsValid && validationData.firstNameIsValid && validationData.lastNameIsValid;
+    function validateForm(firstNameIsValid: boolean, lastNameIsValid: boolean, emailIsValid: boolean) {
+        console.log(emailIsValid && firstNameIsValid && lastNameIsValid)
+        return emailIsValid && firstNameIsValid && lastNameIsValid;
     }
 
     return (
@@ -113,11 +117,11 @@ function SignUp() {
                     onChange={(e) => singleValueValidation(e)}
                     type="text"
                     placeholder="First name"
-                    className={validationData.formErrors.firstName.length > 0 ? "is-invalid" : ""}
+                    className={formErrors.firstNameError.length > 0 ? "is-invalid" : ""}
                     ref={firstNameEl}
                 />
-                {validationData.formErrors.firstName.length > 0 && (
-                    <span className="text-danger">{validationData.formErrors.firstName}</span>
+                {formErrors.firstNameError.length > 0 && (
+                    <span className="text-danger">{formErrors.firstNameError}</span>
                 )}
             </Form.Group>
             <Form.Group >
@@ -130,19 +134,19 @@ function SignUp() {
                     placeholder="Last name"
                     ref={lastNameEl}
                 />
-                 {validationData.formErrors.lastName.length > 0 && (
-                    <span className="text-danger">{validationData.formErrors.lastName}</span>
+                {formErrors.lastNameError.length > 0 && (
+                    <span className="text-danger">{formErrors.lastNameError}</span>
                 )}
             </Form.Group>
 
-            <Form.Group className="has-warning">
+            <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <div className="form-inline">
-                    <input type="email" onBlur={(e) => singleValueValidation(e)} id="email" className={"form-control " + (validationData.formErrors.email.length > 0 ? "is-invalid" : "")} placeholder="Enter email" ref={emailEl} required />
+                    <input type="email" onBlur={(e) => singleValueValidation(e)} id="email" className={"form-control " + (formErrors.emailError.length > 0 ? "is-invalid" : "")} placeholder="Enter email" ref={emailEl} required />
                     <button className="btn btn-dark" onClick={e => checkEmail(e)}>Check Email</button>
                 </div>
-                {validationData.formErrors.email.length > 0 && (
-                    <span className="text-danger">{validationData.formErrors.email}</span>
+                {formErrors.emailError.length > 0 && (
+                    <span className="text-danger">{formErrors.emailError}</span>
                 )}
             </Form.Group >
 
@@ -151,7 +155,7 @@ function SignUp() {
                 <input name="password" type="password" className="form-control" placeholder="Enter password" />
             </Form.Group >
 
-            <button type="submit" onClick={(e) => submit(e)} className="btn btn-danger btn-lg btn-block" disabled={formIsValid}>Register</button>
+            <button type="submit" onClick={(e) => submit(e)} className="btn btn-danger btn-lg btn-block" disabled={!formIsValid}>Register</button>
             <p className="forgot-password text-right">
                 Already registered <a href="http://localhost">log in?</a>
             </p>
