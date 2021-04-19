@@ -16,10 +16,15 @@ type product = {
  * React component for the Header Section.
  */
 
-export const Header = () => {
+export const Header = (props: any) => {
 
   const [productData, setProductData] = useState<product[]>([]);
   const [showForm, setShowForm] = React.useState(false)
+
+  function sendBackData (){
+    setShowForm(true);
+    props.parentCallback(showForm);
+  }
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     axios.get("/quantity-search/search/productsName?productName=" + event.target.value).then(
@@ -29,8 +34,9 @@ export const Header = () => {
   };
 
   return (
-    <Router>   
-        <Navbar bg="light" variant="light" sticky="top">
+    
+    <Router >   
+        <Navbar className="header" bg="light" variant="light" sticky="top">
           <Navbar.Brand ></Navbar.Brand>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="mr-auto navbar-nav navbar-right">
@@ -44,14 +50,14 @@ export const Header = () => {
             <InputGroup>
               <SearchbarDropdown className=" " options={productData.map(product => product.productName)} onInputChange={onInputChange}></SearchbarDropdown>
             </InputGroup>
-            <Link className="nav-link" to={"/sign-in"} onClick={()=>setShowForm(true)} >Sign in</Link>
-            <Link className="nav-link" to={"/sign-up"} onClick={()=>setShowForm(true)} >Sign up</Link>
+            <Link className="nav-link" to={"/sign-in"} onClick={sendBackData} >Sign in</Link>
+            <Link className="nav-link" to={"/sign-up"} onClick={sendBackData} >Sign up</Link>
           </div>
         </Navbar>
 
       { showForm ?
       <div className="outer">
-        <div className="inner">
+        <div className="inner sticky-top">
           <Switch>
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
@@ -61,8 +67,6 @@ export const Header = () => {
       </div> 
       :null}
     </Router>
-
-
-
   )
 }
+

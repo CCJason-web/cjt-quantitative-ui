@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import Axios from 'axios';
 import { Form } from 'react-bootstrap';
+import '../css/signup.css';
 
 function SignUp() {
     const [formIsValid, setFormIsValid] = useState(false);
@@ -9,7 +10,6 @@ function SignUp() {
     const lastNameEl = useRef<HTMLInputElement | null>(null);
     const emailEl = useRef<HTMLInputElement | null>(null);
     const [formValid, setFormValid] = useState<FormValidType>({
-       
         firstNameIsValid: false,
         lastNameIsValid: false,
         emailIsValid: false
@@ -56,7 +56,7 @@ function SignUp() {
         let firstNamelValid;
         let lastNameValid;
         var id = event.target.getAttribute("id");
-        var pattern = new RegExp(".+@.+\.[A-Za-z]+$");
+        var pattern = new RegExp(".+@.+.[A-Za-z]+$");
         var inputValue = event.target.value;
         var dataErrors = {
             ...formErrors
@@ -94,20 +94,18 @@ function SignUp() {
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
-        } else {
-            event.preventDefault();
-        }
+        } 
 
 
     };
 
     function validateForm(firstNameIsValid: boolean, lastNameIsValid: boolean, emailIsValid: boolean) {
-        console.log(emailIsValid && firstNameIsValid && lastNameIsValid)
         return emailIsValid && firstNameIsValid && lastNameIsValid;
     }
 
     return (
-        <Form noValidate validated={formIsValid} onSubmit={(e) => handleSubmit(e)}>
+        <div className="login_dialog">
+        <Form noValidate validated={formIsValid} onSubmit={(e) => handleSubmit(e)}  >
             <h3>Register</h3>
             <Form.Group >
                 <Form.Label>First name</Form.Label>
@@ -142,7 +140,7 @@ function SignUp() {
             <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <div className="form-inline">
-                    <input type="email" onBlur={(e) => singleValueValidation(e)} id="email" className={"form-control " + (formErrors.emailError.length > 0 ? "is-invalid" : "")} placeholder="Enter email" ref={emailEl} required />
+                    <input type="email" onChange={(e) => singleValueValidation(e)} id="email" className={"form-control " + (formErrors.emailError.length > 0 ? "is-invalid" : "")} placeholder="Enter email" ref={emailEl} required />
                     <button className="btn btn-dark" onClick={e => checkEmail(e)}>Check Email</button>
                 </div>
                 {formErrors.emailError.length > 0 && (
@@ -160,6 +158,7 @@ function SignUp() {
                 Already registered <a href="http://localhost">log in?</a>
             </p>
         </Form>
+        </div>
     );
 };
 

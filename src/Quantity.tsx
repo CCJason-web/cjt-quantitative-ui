@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Header } from './components/layout/Header';
 import { Carousel } from 'react-bootstrap';
 import image from './static/Quantity-or-quality-twitter.jpeg';
+import { BooleanLiteral } from 'typescript';
 
 /** 
  * Quantity is the main React component.
@@ -11,11 +12,14 @@ export const Quantity: React.FC<{}> = () => {
    * All the variables for holding state:
    * quantityArray: Holds the current state of the quantity
    */
-
+  const [showBody, setShowBody] = useState<boolean>(true);
+  function callbackFunction(childData: boolean){
+    setShowBody(childData)
+    };
   return (
     <>
-      <Header />
-      <Carousel>
+      <Header parentCallback = {(e: boolean) => callbackFunction(e)}/>
+      {showBody? <Carousel>
         <Carousel.Item>
           <img
             className="d-block w-100"
@@ -49,7 +53,7 @@ export const Quantity: React.FC<{}> = () => {
             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
           </Carousel.Caption>
         </Carousel.Item>
-      </Carousel>
+      </Carousel> :null}
     </>
   );
 }
