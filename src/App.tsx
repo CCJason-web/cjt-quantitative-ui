@@ -1,10 +1,9 @@
 
 import './App.css';
 import React from 'react';
-import { QuantityProvider } from './context/QuantityContext';
-import { Quantity } from './Quantity';
-import { BrowserRouter as Router } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PageNotFound from './components/404/PageNotFound';
+import Main from './components/Main';
 
 /**
  * App is the root React component.
@@ -12,9 +11,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 export const App: React.FC<{}> = () => {
   return (
     <Router>
-      <QuantityProvider>
-        <Quantity />
-      </QuantityProvider>
+      <Switch>
+        <Route exact path="/" component={Main} />
+        <Route component={PageNotFound} />
+      </Switch>
     </Router>
   );
 }

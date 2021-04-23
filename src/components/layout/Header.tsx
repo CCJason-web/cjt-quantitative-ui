@@ -23,7 +23,8 @@ export const Header = (props: any) => {
 
   function sendBackData (){
     setShowForm(true);
-    props.parentCallback(showForm);
+    props.parentCallback(false);
+
   }
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +46,7 @@ export const Header = (props: any) => {
             <Nav.Link href="#Strategies" className=" hidden-sm">Strategies</Nav.Link>
             <Nav.Link href="#Key" className=" hidden-sm">Key strengths</Nav.Link>
             <Nav.Link href="#priciAboutng" className=" hidden-sm">About us</Nav.Link>
+            <Nav.Link href="#Blog" className=" hidden-sm">Blog</Nav.Link>
           </Nav>
           <div className=" form-inline">
             <InputGroup>
