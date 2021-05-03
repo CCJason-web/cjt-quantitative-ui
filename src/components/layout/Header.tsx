@@ -6,6 +6,7 @@ import SearchbarDropdown from '../SearchBar';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "../Login";
 import SignUp from "../SignUp";
+import navList from './navList'
 
 type product = {
   productId: number,
@@ -41,12 +42,9 @@ export const Header = (props: any) => {
           <Navbar.Brand ></Navbar.Brand>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="mr-auto navbar-nav navbar-right">
-            <Nav.Link href="#Insights" className=" hidden-sm" >Insights</Nav.Link>
-            <Nav.Link href="#Funds" className=" hidden-sm">Funds</Nav.Link>
-            <Nav.Link href="#Strategies" className=" hidden-sm">Strategies</Nav.Link>
-            <Nav.Link href="#Key" className=" hidden-sm">Key strengths</Nav.Link>
-            <Nav.Link href="#priciAboutng" className=" hidden-sm">About us</Nav.Link>
-            <Nav.Link href="#Blog" className=" hidden-sm">Blog</Nav.Link>
+          {navList.map(nav => (
+             <Nav.Link href={nav.link} className=" hidden-sm" >{nav.title}</Nav.Link>
+            ))}
           </Nav>
           <div className=" form-inline">
             <InputGroup>
