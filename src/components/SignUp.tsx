@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Axios from 'axios';
 import { Form } from 'react-bootstrap';
 import '../css/signup.css';
+import signup from '../reducers/base'
 
 function SignUp() {
     const [formIsValid, setFormIsValid] = useState(false);

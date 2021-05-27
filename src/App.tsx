@@ -15,10 +15,10 @@ export const App: React.FC<{}> = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={Main} />
-        <Route path="/Blog" component={Blog} />
-        <Route path="/sign-in" component={RedirectToHome} />
-        <Route path="/sign-up" component={RedirectToHome} />
-        <Route component={PageNotFound} />
+        <Route exact path="/Blog" component={Blog} />
+        <Route exact path="/sign-in" component={RedirectToHome} />
+        <Route exact path="/sign-up" component={RedirectToHome} />
+        <Route exact component={PageNotFound} />
       </Switch>
     </Router>
   );
