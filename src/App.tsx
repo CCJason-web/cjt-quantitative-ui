@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PageNotFound from './components/404/PageNotFound';
 import RedirectToHome from './components/404/RedirectToHome';
 import Blog from './components/layout/Blog';
-import Main from './components/Main';
+import Main from './components/Main'; // No curly brackets cuz of there's a default function
 
 /**
  * App is the root React component.

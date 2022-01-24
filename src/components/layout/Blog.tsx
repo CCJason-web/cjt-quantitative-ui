@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Blog(props: any) {
+function Blog() {
     return (
     <React.Fragment>
         <h1>Hello, welcome to my blog!</h1>

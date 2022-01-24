@@ -12,6 +12,7 @@ export const Quantity: React.FC<{}> = () => {
    * quantityArray: Holds the current state of the quantity
    */
   const [showBody, setShowBody] = useState<boolean>(true);
+  
   function callbackFunction(childData: boolean){
     setShowBody(childData)
     };
